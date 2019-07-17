@@ -2,13 +2,13 @@ package frc.team5104.util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
-public class BannerPhotoelectric {
+public class AnalogToDigitalInput {
 	private AnalogInput analogInput;
 	public int disconnectValue;
 	
 	//Constructor
-	public BannerPhotoelectric(int port) { this(port, 205); }
-	public BannerPhotoelectric(int port, int disconnectValue) {
+	public AnalogToDigitalInput(int port) { this(port, 205); }
+	public AnalogToDigitalInput(int port, int disconnectValue) {
 		analogInput = new AnalogInput(port);
 		this.disconnectValue = disconnectValue;
 	}
