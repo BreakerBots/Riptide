@@ -32,9 +32,7 @@ public class console {
 		HATCH,
 		CLIMBER,
 		
-		WEBAPP, 
-		
-		TUNING
+		WEBAPP
 	};
 	
 	/**
@@ -111,13 +109,6 @@ public class console {
 	 */
 	public static void warn(Object... a) { log(c.OTHER, t.WARNING, objectArrayToString(a)); }
 	
-	// -- DIVIDER
-	/**
-	 * Prints out a divider
-	 */
-	public static void divider() {
-		System.out.println("<----------------------------------------->");
-	}
 	
 	
 	//  ----------------------------------------  Timing Groups/Sets  ----------------------------------------  \\
