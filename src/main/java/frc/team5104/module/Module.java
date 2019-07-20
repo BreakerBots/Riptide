@@ -5,10 +5,7 @@ package frc.team5104.module;
  * A wrapper of all the requirements of a subsystem.
  */
 public class Module {
-	public static abstract class Main {
-		
-	}
-	
+	public static abstract class Main { }
 	public static abstract class Constants { }
 	
 	public static abstract class Manager {

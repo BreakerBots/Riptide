@@ -25,8 +25,8 @@ class DriveController extends Module.Controller {
 	//Main Handle Function
 	protected void update() {
 		//Get inputs
-		double turn = Controls.Drive._turn.getAxis();
-		double forward = Controls.Drive._forward.getAxis() - Controls.Drive._reverse.getAxis();
+		double turn = Controls.Drive.turn.getAxis();
+		double forward = Controls.Drive.forward.getAxis() - Controls.Drive.reverse.getAxis();
 
 		//Apply controller deadbands
 		turn = -Deadband.get(turn,  0.08, deadbandType.slopeAdjustment);

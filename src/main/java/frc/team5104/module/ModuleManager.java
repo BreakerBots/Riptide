@@ -14,6 +14,7 @@ public class ModuleManager {
 	public static void useModules(Module.Manager... modules) {
 		targets = modules;
 		
+		//Initialize Module's Systems
 		for (Module.Manager t : targets) {
 			try {
 				t.getSystems().init();
@@ -47,7 +48,6 @@ public class ModuleManager {
 	
 	/**
 	 * CALL when the robot becomes enabled
-	 * @param teleop
 	 */
 	public static void enabled() {
 		for (Module.Manager t : targets) {

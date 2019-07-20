@@ -6,6 +6,7 @@ import frc.team5104.module.tshirt.TShirtSystems.valve.ValveState;
 
 public class TShirtManager extends Module.Manager {
 	public boolean isModuleAttached() {
+		//Detect Module Attached...
 		return false;
 	}
 	

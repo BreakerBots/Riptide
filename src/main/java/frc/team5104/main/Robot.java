@@ -8,15 +8,12 @@ import frc.team5104.util.Controller;
 import frc.team5104.webapp.Tuner;
 import frc.team5104.webapp.Webapp;
 
-/**
- * Fallthrough from <strong>Breaker Robot Controller</strong>
- */
 public class Robot extends RobotController.BreakerRobot {
 	public Robot() {
 		ModuleManager.useModules(ModuleManager.identifyModules(
-				new DriveManager(), 
-				new TShirtManager()
-			));
+			new DriveManager(), 
+			new TShirtManager()
+		));
 		Webapp.init();
 		Tuner.init();
 	}
@@ -28,16 +25,10 @@ public class Robot extends RobotController.BreakerRobot {
 	public void mainDisabled() {
 		ModuleManager.disabled();
 	}
-	
 	public void mainLoop() {
 		if (RobotState.isEnabled()) {
 			ModuleManager.handle();
 			Controller.handle();
 		}
 	}
-
-	//Teleop
-	public void teleopStart() { }
-	public void teleopLoop() { }
-	public void teleopStop() { }
 }

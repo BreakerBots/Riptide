@@ -10,15 +10,15 @@ import frc.team5104.util.Controller.ControlList;
 public class Controls {
 	//Drive
 	public static class Drive {
-		public static final Control _turn = new Control(ControlList.LeftJoystickX);
-		public static final Control _forward = new Control(ControlList.RightTrigger);
-		public static final Control _reverse = new Control(ControlList.LeftTrigger);
+		public static final Control turn = new Control(ControlList.LeftJoystickX);
+		public static final Control forward = new Control(ControlList.RightTrigger);
+		public static final Control reverse = new Control(ControlList.LeftTrigger);
 	}
 	
 	//Hatch
 	public static class TShirt {
-		public static final Control _fire = new Control(ControlList.RightBumper);
-		public static final Control _rotateYaw = new Control(ControlList.RightJoystickX); //Turret
-		public static final Control _rotatePitch = new Control(ControlList.RightJoystickY);
+		public static final Control fire = new Control(ControlList.RightBumper);
+		public static final Control rotateTurret = new Control(ControlList.RightJoystickX); //Turret
+		public static final Control rotatePitch = new Control(ControlList.RightJoystickY);
 	}
 }

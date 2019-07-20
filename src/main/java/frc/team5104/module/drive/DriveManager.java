@@ -5,6 +5,8 @@ import frc.team5104.module.Module;
 
 public class DriveManager extends Module.Manager {
 	public boolean isModuleAttached() {
+		//Detect Module Attached...
+		//CAN can = new CAN(11);
 		return false;
 	}
 	

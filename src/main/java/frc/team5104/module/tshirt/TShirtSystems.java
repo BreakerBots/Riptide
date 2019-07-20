@@ -7,7 +7,7 @@ import frc.team5104.module.Module;
 
 public class TShirtSystems extends Module.Systems {
 	//Talons
-	//private static TalonSRX Talon_Yaw;
+	//private static TalonSRX Talon_Turret;
 	//private static TalonSRX Talon_Pitch;
 	//private static CANifier CANifier;
 	private static Solenoid Valve;
@@ -36,10 +36,50 @@ public class TShirtSystems extends Module.Systems {
 		}
 	}
 	
+	protected static class turret {
+		static void setSpeed(double voltage) {
+			//Set talon speed.....
+		}
+		static void stop() { setSpeed(0); }
+		
+		static double getRotation() {
+			return -1;
+		}
+		
+		static boolean leftLimitHit() {
+			return true;
+		}
+		
+		static boolean rightLimitHit() {
+			return true;
+		}
+	}
+	
+	protected static class pitch {
+		static void setSpeed(double voltage) {
+			//Set talon speed...
+		}
+		static void stop() { setSpeed(0); }
+		
+		static double getRotation() {
+			return -1;
+		}
+		
+		static boolean lowerLimitHit() {
+			return true;
+		}
+		
+		static boolean upperLimitHit() {
+			return true;
+		}
+	}
+	
+	//protected static class revolver {}
+	
 	protected void init() {
 		Valve = new Solenoid(Ports.TSHIRT_VALVE);
 		
-		//Talon_Yaw = TalonFactory.getTalon(Ports.TSHIRT_TALON_YAW...
+		//Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET...
 		//Talon_Pitch = TalonFactory.getTalon(...
 		
 		//CANifier = new CANifier(...
