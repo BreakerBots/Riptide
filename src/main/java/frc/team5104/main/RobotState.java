@@ -4,11 +4,10 @@ public class RobotState {
 	
 	//State Machine
 	public static enum RobotMode {
-		Disabled, Auto, Teleop, Test
+		Disabled, Teleop, Test
 	}; 
 	protected RobotMode currentMode = RobotMode.Disabled;
 	protected RobotMode lastMode = RobotMode.Disabled;
-	protected boolean isSandstorm;
 	
 	//Access
 	protected static RobotState instance;
@@ -19,7 +18,6 @@ public class RobotState {
 	}
 	
 	//External Functions
-	public static boolean isSandstorm() { return getInstance().isSandstorm; }
 	public static boolean isEnabled() { return getInstance().currentMode != RobotMode.Disabled; }
 	public static RobotMode getMode() { return getInstance().currentMode; }
 	public static void setMode(RobotMode mode) { getInstance().currentMode = mode; }

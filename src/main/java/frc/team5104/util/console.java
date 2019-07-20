@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import frc.team5104.main._RobotConstants;
+import frc.team5104.main.RobotConstants;
 
 /**
  * <h1>Console</h1>
@@ -22,15 +22,11 @@ public class console {
 	 */
 	public static enum c { 
 		TELEOP, 
-		AUTO, 
 		MAIN, 
 		DRIVE, 
 		OTHER,
 		
-		VISION,
-		CARGO,
-		HATCH,
-		CLIMBER,
+		TSHIRT,
 		
 		WEBAPP
 	};
@@ -109,6 +105,13 @@ public class console {
 	 */
 	public static void warn(Object... a) { log(c.OTHER, t.WARNING, objectArrayToString(a)); }
 	
+	// -- DIVIDER
+	/**
+	 * Prints out a divider
+	 */
+	public static void divider() {
+		System.out.println("<----------------------------------------->");
+	}
 	
 	
 	//  ----------------------------------------  Timing Groups/Sets  ----------------------------------------  \\
@@ -219,7 +222,7 @@ public class console {
 					String fileName;
 					
 					//File Name
-					if (hasFMS ? _RobotConstants.Logging._OverwriteMatchLogs : _RobotConstants.Logging._OverwriteNonMatchLogs)
+					if (hasFMS ? RobotConstants.OVERWRITE_MATCH_LOGS : RobotConstants.OVERWRITE_NON_MATCH_LOGS)
 						fileName = "log.txt";
 					else
 						fileName = DateTimeFormatter.ofPattern("MM-dd-yyyy_HH-mm").format(LocalDateTime.now()) + ".txt";

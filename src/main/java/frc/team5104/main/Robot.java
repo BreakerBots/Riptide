@@ -1,42 +1,43 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
-import frc.team5104.main.RobotState.RobotMode;
-import frc.team5104.util.console;
+import frc.team5104.module.ModuleManager;
+import frc.team5104.module.drive.DriveManager;
+import frc.team5104.module.tshirt.TShirtManager;
+import frc.team5104.util.Controller;
+import frc.team5104.webapp.Tuner;
+import frc.team5104.webapp.Webapp;
 
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
  */
 public class Robot extends RobotController.BreakerRobot {
 	public Robot() {
-
+		ModuleManager.useModules(ModuleManager.identifyModules(
+				new DriveManager(), 
+				new TShirtManager()
+			));
+		Webapp.init();
+		Tuner.init();
 	}
 	
+	//Main
 	public void mainEnabled() {
-		console.logFile.start();
-		console.log("Robot Enabled");
+		ModuleManager.enabled();
 	}
 	public void mainDisabled() {
-		console.log("Robot Disabled");
-		console.logFile.end();
+		ModuleManager.disabled();
 	}
 	
-	Joystick controller = new Joystick(0);
-	Solenoid sol = new Solenoid(4);
-	boolean mode = false;
 	public void mainLoop() {
-		console.log(mode);
-		if (RobotState.getMode() == RobotMode.Teleop) {
-			if (controller.getRawButtonPressed(1)) {
-				console.log("changing mode");
-				mode = !mode;
-			}
-		} 
-		else {
-			mode = false;
+		if (RobotState.isEnabled()) {
+			ModuleManager.handle();
+			Controller.handle();
 		}
-		sol.set(mode);
 	}
+
+	//Teleop
+	public void teleopStart() { }
+	public void teleopLoop() { }
+	public void teleopStop() { }
 }

@@ -57,9 +57,6 @@ class RobotController extends RobotBase {
 		if (isDisabled())
 			state.currentMode = RobotMode.Disabled;
 		
-		if (isAutonomous())
-			state.isSandstorm = true;
-		
 		else if (isEnabled()) {
 			//Forced Through Driver Station
 			if (isTest())
@@ -72,24 +69,13 @@ class RobotController extends RobotBase {
 		
 		//Handle Modes
 		switch(currentMode) {
-			case Auto: {
-				try {
-					//Auto
-					if (lastMode != currentMode)
-						robot.autoStart();
-						
-					robot.autoLoop();
-					HAL.observeUserProgramAutonomous();
-				} catch (Exception e) {
-					CrashLogger.logCrash(new Crash("main", e));
-				}
-				break;
-			}
 			case Teleop: {
 				try {
 					//Teleop
-					if (lastMode != currentMode)
+					if (lastMode != currentMode) {
+						console.log(c.MAIN, t.INFO, "Teleop Enabled");
 						robot.teleopStart();
+					}
 					
 					robot.teleopLoop();
 					HAL.observeUserProgramTeleop();
@@ -102,8 +88,10 @@ class RobotController extends RobotBase {
 			case Test: {
 				try {
 					//Test
-					if (lastMode != currentMode)
+					if (lastMode != currentMode) {
+						console.log(c.MAIN, t.INFO, "Test Enabled");
 						robot.testStart();
+					}
 					
 					robot.testLoop();
 					HAL.observeUserProgramTest();
@@ -117,9 +105,8 @@ class RobotController extends RobotBase {
 					//Disabled
 					if (lastMode != currentMode)
 						switch (lastMode) {
-							case Auto: 	 { robot.autoStop(); break; }
-							case Teleop: { robot.teleopStop(); break; }
-							case Test: 	 { robot.testStop(); break; }
+							case Teleop: { robot.teleopStop(); console.log(c.MAIN, t.INFO, "Teleop Disabled"); break; }
+							case Test: 	 { robot.testStop(); console.log(c.MAIN, t.INFO, "Test Disabled"); break; }
 							default: break;
 						}
 					
@@ -136,9 +123,11 @@ class RobotController extends RobotBase {
 		try {
 			if (lastMode != currentMode) {
 				if (currentMode == RobotMode.Disabled) {
+					console.logFile.end();
 					robot.mainDisabled();
 				}
 				else if (lastMode == RobotMode.Disabled) {
+					console.logFile.start();
 					robot.mainEnabled();
 				}
 				LiveWindow.setEnabled(currentMode == RobotMode.Disabled);
@@ -178,14 +167,8 @@ class RobotController extends RobotBase {
 		public void teleopLoop() { }
 		public void teleopStart() { }
 		public void teleopStop() { }
-		public void autoLoop() { }
-		public void autoStart() { }
-		public void autoStop() { }
 		public void testLoop() { }
 		public void testStart() { }
 		public void testStop() { }
-		public void visionLoop() { }
-		public void visionStart() { }
-		public void visionStop() { }
 	}
 }
