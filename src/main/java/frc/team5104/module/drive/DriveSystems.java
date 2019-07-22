@@ -68,8 +68,8 @@ public class DriveSystems extends Module.Systems {
 	//Setup
 	protected void init() {
 		//Initialize Talons
-		Talon_L1 = TalonFactory.getTalon(Ports.DRIVE_TALON_L1, new TalonSettings(NeutralMode.Brake, true, DriveConstants.CURRENT_LIMIT, true));
-		Talon_L2 = TalonFactory.getTalon(Ports.DRIVE_TALON_L2, new TalonSettings(NeutralMode.Brake, true, DriveConstants.CURRENT_LIMIT, true));
+		Talon_L1 = TalonFactory.getTalon(Ports.DRIVE_TALON_L1, new TalonSettings(NeutralMode.Brake, false, DriveConstants.CURRENT_LIMIT, true));
+		Talon_L2 = TalonFactory.getTalon(Ports.DRIVE_TALON_L2, new TalonSettings(NeutralMode.Brake, false, DriveConstants.CURRENT_LIMIT, true));
 		Talon_R1 = TalonFactory.getTalon(Ports.DRIVE_TALON_R1, new TalonSettings(NeutralMode.Brake, true, DriveConstants.CURRENT_LIMIT, true));
 		Talon_R2 = TalonFactory.getTalon(Ports.DRIVE_TALON_R2, new TalonSettings(NeutralMode.Brake, true, DriveConstants.CURRENT_LIMIT, true));
 		

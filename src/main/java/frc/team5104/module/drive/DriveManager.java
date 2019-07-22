@@ -7,7 +7,7 @@ public class DriveManager extends Module.Manager {
 	public boolean isModuleAttached() {
 		//Detect Module Attached...
 		//CAN can = new CAN(11);
-		return false;
+		return true;
 	}
 	
 	//Controller and Systems Classes
