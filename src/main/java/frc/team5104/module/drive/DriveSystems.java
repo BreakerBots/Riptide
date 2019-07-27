@@ -12,7 +12,7 @@ import frc.team5104.util.TalonFactory;
 import frc.team5104.util.console;
 import frc.team5104.util.TalonFactory.TalonSettings;
 
-public class DriveSystems extends Module.Systems {
+class DriveSystems extends Module.Systems {
 	//Talons
 	private static TalonSRX Talon_L1;
 	private static TalonSRX Talon_L2;
