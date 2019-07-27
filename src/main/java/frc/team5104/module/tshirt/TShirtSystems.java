@@ -1,18 +1,23 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.module.tshirt;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.team5104.main.Ports;
 import frc.team5104.module.Module;
+import frc.team5104.util.TalonFactory;
 
-public class TShirtSystems extends Module.Systems {
+class TShirtSystems extends Module.Systems {
 	//Talons
-	//private static TalonSRX Talon_Turret;
-	//private static TalonSRX Talon_Pitch;
+	private static TalonSRX Talon_Turret;
+	private static TalonSRX Talon_Pitch;
+	//private static TalonSRX Talon_Revolver;
 	//private static CANifier CANifier;
 	private static Solenoid Valve;
 	
-	protected static class valve {
+	static class valve {
 		static enum ValveState {
 			FILL,
 			EXHAUST
@@ -36,9 +41,9 @@ public class TShirtSystems extends Module.Systems {
 		}
 	}
 	
-	protected static class turret {
+	static class turret {
 		static void setSpeed(double voltage) {
-			//Set talon speed.....
+			Talon_Turret.set(ControlMode.PercentOutput, voltage/Talon_Turret.getBusVoltage());
 		}
 		static void stop() { setSpeed(0); }
 		
@@ -55,9 +60,9 @@ public class TShirtSystems extends Module.Systems {
 		}
 	}
 	
-	protected static class pitch {
+	static class pitch {
 		static void setSpeed(double voltage) {
-			//Set talon speed...
+			Talon_Pitch.set(ControlMode.PercentOutput, voltage/Talon_Pitch.getBusVoltage());
 		}
 		static void stop() { setSpeed(0); }
 		
@@ -74,14 +79,15 @@ public class TShirtSystems extends Module.Systems {
 		}
 	}
 	
-	//protected static class revolver {}
+	//static class revolver {}
 	
 	protected void init() {
 		Valve = new Solenoid(Ports.TSHIRT_VALVE);
 		
-		//Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET...
-		//Talon_Pitch = TalonFactory.getTalon(...
+		Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET);
+		Talon_Pitch = TalonFactory.getTalon(Ports.TSHIRT_TALON_PITCH);
 		
 		//CANifier = new CANifier(...
+		//Talon_Revolver = TalonFactory.getTalon...
 	}
 }

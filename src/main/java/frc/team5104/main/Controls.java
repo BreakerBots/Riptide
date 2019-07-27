@@ -18,7 +18,7 @@ public class Controls {
 	//Hatch
 	public static class TShirt {
 		public static final Control fire = new Control(ControlList.RightBumper);
-		public static final Control rotateTurret = new Control(ControlList.RightJoystickX); //Turret
+		public static final Control rotateTurret = new Control(ControlList.RightJoystickX);
 		public static final Control rotatePitch = new Control(ControlList.RightJoystickY);
 	}
 }

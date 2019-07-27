@@ -15,10 +15,11 @@ class TShirtController extends Module.Controller {
 			console.log(c.TSHIRT, TShirtSystems.valve.state == ValveState.EXHAUST ? "Firing!" : "Filling!");
 		}
 		
-		if (Turret.state == TurretState.MANUAL)
-			TShirtSystems.turret.setSpeed(Controls.TShirt.rotateTurret.getAxis());
+		if (Turret.state == TurretState.MANUAL) {
+			TShirtSystems.turret.setSpeed(Controls.TShirt.rotateTurret.getAxis() * TShirtConstants.TURRET_MAX_VOLTAGE);
+		}
 		
-		TShirtSystems.pitch.setSpeed(Controls.TShirt.rotatePitch.getAxis());
+		TShirtSystems.pitch.setSpeed(Controls.TShirt.rotatePitch.getAxis() * TShirtConstants.PITCH_MAX_VOLTAGE);
 	}
 		
 	protected void idle() {
