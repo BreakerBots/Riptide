@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.module.tshirt;
 
+import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -14,7 +15,7 @@ class TShirtSystems extends Module.Systems {
 	private static TalonSRX Talon_Turret;
 	private static TalonSRX Talon_Pitch;
 	//private static TalonSRX Talon_Revolver;
-//	private static CANifier CANifier;
+	private static CANifier canifier;
 	private static Solenoid Valve;
 	
 	static class valve {
@@ -79,6 +80,12 @@ class TShirtSystems extends Module.Systems {
 		}
 	}
 	
+	static class pressure_sensor {
+		static double getPressure() {
+			return -1;
+		}
+	}
+	
 	//static class revolver {}
 	
 	protected void init() {
@@ -87,8 +94,7 @@ class TShirtSystems extends Module.Systems {
 		Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET);
 		Talon_Pitch = TalonFactory.getTalon(Ports.TSHIRT_TALON_PITCH);
 		
-//		CANifier.configFactoryDefault();
-//		CANifier.setPWMOutput(pwmChannel, dutyCycle);
+		canifier.configFactoryDefault();
 		
 		//CANifier = new CANifier(...
 		//Talon_Revolver = TalonFactory.getTalon...
