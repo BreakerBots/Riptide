@@ -14,7 +14,7 @@ class TShirtSystems extends Module.Systems {
 	private static TalonSRX Talon_Turret;
 	private static TalonSRX Talon_Pitch;
 	//private static TalonSRX Talon_Revolver;
-	//private static CANifier CANifier;
+//	private static CANifier CANifier;
 	private static Solenoid Valve;
 	
 	static class valve {
@@ -86,6 +86,9 @@ class TShirtSystems extends Module.Systems {
 		
 		Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET);
 		Talon_Pitch = TalonFactory.getTalon(Ports.TSHIRT_TALON_PITCH);
+		
+//		CANifier.configFactoryDefault();
+//		CANifier.setPWMOutput(pwmChannel, dutyCycle);
 		
 		//CANifier = new CANifier(...
 		//Talon_Revolver = TalonFactory.getTalon...

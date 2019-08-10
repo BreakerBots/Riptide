@@ -19,7 +19,9 @@ class TShirtController extends Module.Controller {
 			TShirtSystems.turret.setSpeed(Controls.TShirt.rotateTurret.getAxis() * TShirtConstants.TURRET_MAX_VOLTAGE);
 		}
 		
-		TShirtSystems.pitch.setSpeed(Controls.TShirt.rotatePitch.getAxis() * TShirtConstants.PITCH_MAX_VOLTAGE);
+		TShirtSystems.pitch.setSpeed(Controls.TShirt.rotatePitch.getAxis() * 
+				(Controls.TShirt.rotatePitch.getAxis() < 0 ? TShirtConstants.PITCH_UP_MAX_VOLTAGE :
+					TShirtConstants.PITCH_DOWN_MAX_VOLTAGE));
 	}
 		
 	protected void idle() {

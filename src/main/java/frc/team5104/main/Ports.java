@@ -12,7 +12,7 @@ public class Ports {
 	public static final int DRIVE_TALON_R2 = 14;
 	
 	//TSHIRT
-	public static final int TSHIRT_VALVE = 4;
+	public static final int TSHIRT_VALVE = 3;
 	public static final int TSHIRT_TALON_TURRET = 21; //turret
 	public static final int TSHIRT_TALON_PITCH = 22;
 	//public static final int TSHIRT_TALON_RELOAD = 23;

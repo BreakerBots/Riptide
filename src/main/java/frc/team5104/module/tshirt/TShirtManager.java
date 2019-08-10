@@ -8,7 +8,7 @@ public class TShirtManager extends Module.Manager {
 	//Manager Meta
 	public boolean isModuleAttached() {
 		//Detect Module Attached...
-		return false;
+		return true;
 	}
 	private TShirtController controller = new TShirtController();
 	private TShirtSystems systems = new TShirtSystems();
