@@ -3,6 +3,8 @@ package frc.team5104.module.tshirt;
 
 import frc.team5104.module.Module;
 import frc.team5104.module.tshirt.TShirtSystems.valve.ValveState;
+import frc.team5104.util.console;
+import frc.team5104.util.console.c;
 
 public class TShirtManager extends Module.Manager {
 	//Manager Meta

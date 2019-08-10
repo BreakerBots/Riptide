@@ -20,5 +20,7 @@ public class Controls {
 		public static final Control fire = new Control(ControlList.RightBumper);
 		public static final Control rotateTurret = new Control(ControlList.RightJoystickX);
 		public static final Control rotatePitch = new Control(ControlList.RightJoystickY);
+		public static final Control	pressure_increase = new Control(ControlList.DirectionPadUp);
+		public static final Control	pressure_decrease = new Control(ControlList.DirectionPadDown);
 	}
 }
