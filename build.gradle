@@ -19,9 +19,9 @@ deploy {
             debug = frc.getDebugOrDefault(false)
         }
         fileTreeArtifact('frcStaticFileDeploy') {
-            files = fileTree(dir: 'src/main/deploy')
+            files = fileTree(dir: 'src/webapp')
             targets << "roborio"
-            directory = '/home/lvuser/deploy'
+            directory = '/home/lvuser/webapp'
         }
     }
 }

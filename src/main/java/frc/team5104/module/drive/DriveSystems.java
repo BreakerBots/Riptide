@@ -11,6 +11,8 @@ import frc.team5104.module.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.TalonFactory;
 import frc.team5104.util.console;
 import frc.team5104.util.TalonFactory.TalonSettings;
+import frc.team5104.util.console.c;
+import frc.team5104.util.console.t;
 
 class DriveSystems extends Module.Systems {
 	//Talons
@@ -18,6 +20,12 @@ class DriveSystems extends Module.Systems {
 	private static TalonSRX Talon_L2;
 	private static TalonSRX Talon_R1;
 	private static TalonSRX Talon_R2;
+	
+	//Module Attached
+	public boolean isModuleAttached() {
+		Talon_L1 = TalonFactory.getTalon(Ports.DRIVE_TALON_L1);
+		return Talon_L1.getFirmwareVersion() > 0;
+	}
 	
 	//Motors
 	static class motors {
@@ -92,5 +100,7 @@ class DriveSystems extends Module.Systems {
 		
 		//Make Sure Everything is caught up :)
 		try { Thread.sleep(100); } catch (Exception e) { console.error(e); }
+		
+		console.log(c.DRIVE, t.INFO, "Initialized");
 	}
 }

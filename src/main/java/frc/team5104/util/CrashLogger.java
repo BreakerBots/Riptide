@@ -21,9 +21,11 @@ public class CrashLogger {
 		}
 		
 		public boolean equals(Crash otherCrash) {
-			if (otherCrash == null) return false;
-			return this.threadName.equals(otherCrash.threadName) && 
-				   this.exception.getMessage().equals(otherCrash.exception.getMessage());
+			try {
+				if (otherCrash == null) return false;
+				return this.threadName.equals(otherCrash.threadName) && 
+					   this.exception.getMessage().equals(otherCrash.exception.getMessage());
+			} catch (Exception e) { /*expected to fail*/ return false; }
 		}
 	}
 	

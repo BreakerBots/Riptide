@@ -1,7 +1,6 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.module.tshirt;
 
-import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -9,14 +8,23 @@ import edu.wpi.first.wpilibj.Solenoid;
 import frc.team5104.main.Ports;
 import frc.team5104.module.Module;
 import frc.team5104.util.TalonFactory;
+import frc.team5104.util.console;
+import frc.team5104.util.console.c;
+import frc.team5104.util.console.t;
 
 class TShirtSystems extends Module.Systems {
+	
 	//Talons
 	private static TalonSRX Talon_Turret;
 	private static TalonSRX Talon_Pitch;
 	//private static TalonSRX Talon_Revolver;
-	private static CANifier canifier;
 	private static Solenoid Valve;
+	
+	//Module Attached
+	public boolean isModuleAttached() {
+		Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET);
+		return Talon_Turret.getFirmwareVersion() > 0;
+	}
 	
 	static class valve {
 		static enum ValveState {
@@ -49,7 +57,7 @@ class TShirtSystems extends Module.Systems {
 		static void stop() { setSpeed(0); }
 		
 		static double getRotation() {
-			return -1;
+			return Talon_Turret.getSelectedSensorPosition();
 		}
 		
 		static boolean leftLimitHit() {
@@ -80,9 +88,13 @@ class TShirtSystems extends Module.Systems {
 		}
 	}
 	
-	static class pressure_sensor {
+	static class pressureSensor {
 		static double getPressure() {
-			return -1;
+			return Talon_Pitch.getSelectedSensorPosition();
+		}
+		
+		static double getPressureVelocity() {
+			return Talon_Pitch.getSelectedSensorVelocity() * 10 /* Convert PSI/100ms to PSI/sec */;
 		}
 	}
 	
@@ -94,9 +106,8 @@ class TShirtSystems extends Module.Systems {
 		Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET);
 		Talon_Pitch = TalonFactory.getTalon(Ports.TSHIRT_TALON_PITCH);
 		
-		canifier.configFactoryDefault();
-		
-		//CANifier = new CANifier(...
 		//Talon_Revolver = TalonFactory.getTalon...
+		
+		console.log(c.TSHIRT, t.INFO, "Initialized");
 	}
 }

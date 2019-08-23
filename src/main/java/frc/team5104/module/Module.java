@@ -9,15 +9,16 @@ public class Module {
 	public static abstract class Constants { }
 	
 	public static abstract class Manager {
-		protected abstract boolean isModuleAttached();
 		protected abstract Module.Controller getController();
 		protected abstract Module.Systems getSystems();
+		protected abstract String getName();
 		protected abstract void enabled();
 		protected abstract void update();
 		protected abstract void disabled();
 	}
 	
 	public static abstract class Systems {
+		protected abstract boolean isModuleAttached();
 		protected abstract void init();
 	}
 	

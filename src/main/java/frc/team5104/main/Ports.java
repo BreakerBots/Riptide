@@ -16,5 +16,5 @@ public class Ports {
 	public static final int TSHIRT_TALON_TURRET = 21; //turret
 	public static final int TSHIRT_TALON_PITCH = 22;
 	//public static final int TSHIRT_TALON_RELOAD = 23;
-	public static final int TSHIRT_CANIFIER = 24;
+	//public static final int TSHIRT_CANIFIER = 24;
 }

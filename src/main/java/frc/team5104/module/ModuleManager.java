@@ -3,6 +3,9 @@ package frc.team5104.module;
 
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
+import frc.team5104.util.console;
+import frc.team5104.util.console.c;
+import frc.team5104.util.console.t;
 
 /**
  * Manages the updating and handling of all BreakerSubsystems thrown into it
@@ -14,14 +17,19 @@ public class ModuleManager {
 	public static void useModules(Module.Manager... modules) {
 		targets = modules;
 		
+		String printOut = "Running Modules: ";
+		
 		//Initialize Module's Systems
 		for (Module.Manager t : targets) {
 			try {
 				t.getSystems().init();
+				printOut += t.getName() + " ";
 			} catch (Exception e) {
 				CrashLogger.logCrash(new Crash("main", e));
 			}
 		}
+		
+		console.log(c.MAIN, t.INFO, printOut);
 	}
 	
 	/** Identify what modules and attached */
@@ -31,7 +39,7 @@ public class ModuleManager {
 		Module.Manager[] attached_modules = new Module.Manager[available_modules.length];
 		int attached_modules_index = 0;
 		for (Module.Manager t : available_modules) {
-			if (t.isModuleAttached()) {
+			if (t.getSystems().isModuleAttached()) {
 				attached_modules[attached_modules_index] = t;
 				attached_modules_index++;
 			}
