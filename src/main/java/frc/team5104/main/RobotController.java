@@ -48,7 +48,10 @@ class RobotController extends RobotBase {
 				CrashLogger.logCrash(new Crash("main", e));
 			}
 			
+			//Wait to make loop correct time
 			try { Thread.sleep(Math.round(loopPeriod - (Timer.getFPGATimestamp() - st))); } catch (Exception e) { console.error(e); }
+			
+			state.deltaTime = Timer.getFPGATimestamp() - st;
 		}
 	}
 
@@ -79,7 +82,8 @@ class RobotController extends RobotBase {
 					
 					robot.teleopLoop();
 					HAL.observeUserProgramTeleop();
-					DriverStation.getInstance().waitForData(0.2);
+					
+					state.gotDriverStationResponse = DriverStation.getInstance().waitForData(0.2);
 				} catch (Exception e) {
 					CrashLogger.logCrash(new Crash("main", e));
 				}

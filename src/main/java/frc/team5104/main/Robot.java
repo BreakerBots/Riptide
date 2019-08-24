@@ -28,6 +28,11 @@ public class Robot extends RobotController.BreakerRobot {
 	public void mainLoop() {
 		if (RobotState.isEnabled()) {
 			ModuleManager.handle();
+			
+			if (Controls.robotDisable.getPressed()) {
+				//TODO disable robot here
+			}
+			
 			Controller.handle();
 		}
 	}

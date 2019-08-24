@@ -2,10 +2,13 @@
 package frc.team5104.module.tshirt;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.team5104.main.Ports;
+import frc.team5104.main.RobotState;
 import frc.team5104.module.Module;
 import frc.team5104.util.TalonFactory;
 import frc.team5104.util.console;
@@ -52,9 +55,17 @@ class TShirtSystems extends Module.Systems {
 	
 	static class turret {
 		static void setSpeed(double voltage) {
-			Talon_Turret.set(ControlMode.PercentOutput, voltage/Talon_Turret.getBusVoltage());
+			if (RobotState.gotDriverStationResponse()) {
+				Talon_Turret.set(ControlMode.PercentOutput, voltage/Talon_Turret.getBusVoltage());
+			}
+			else {
+				//Motor Safety
+				stop();
+			}
 		}
-		static void stop() { setSpeed(0); }
+		static void stop() { 
+			Talon_Turret.set(ControlMode.Disabled, 0);
+		}
 		
 		static double getRotation() {
 			return Talon_Turret.getSelectedSensorPosition();
@@ -71,9 +82,17 @@ class TShirtSystems extends Module.Systems {
 	
 	static class pitch {
 		static void setSpeed(double voltage) {
-			Talon_Pitch.set(ControlMode.PercentOutput, voltage/Talon_Pitch.getBusVoltage());
+			if (RobotState.gotDriverStationResponse()) {
+				Talon_Pitch.set(ControlMode.PercentOutput, voltage/Talon_Pitch.getBusVoltage());
+			}
+			else {
+				//Motor Safety
+				stop();
+			}
 		}
-		static void stop() { setSpeed(0); }
+		static void stop() {
+			Talon_Pitch.set(ControlMode.Disabled, 0);
+		}
 		
 		static double getRotation() {
 			return -1;
@@ -105,6 +124,8 @@ class TShirtSystems extends Module.Systems {
 		
 		Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET);
 		Talon_Pitch = TalonFactory.getTalon(Ports.TSHIRT_TALON_PITCH);
+		
+		Talon_Pitch.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.Analog);
 		
 		//Talon_Revolver = TalonFactory.getTalon...
 		

@@ -18,6 +18,9 @@ class TShirtController extends Module.Controller {
 	FireMode fireMode = FireMode.manual;
 	
 	protected void update() {
+		//Temp
+		//console.log("pressure: " + TShirtSystems.pressureSensor.getPressure());
+		
 		//Firing
 		if (Controls.TShirt.fire.getPressed()) {
 			TShirtSystems.valve.toggleState();
@@ -27,7 +30,7 @@ class TShirtController extends Module.Controller {
 		}
 		
 		//Pressure Print Out
-		if (TShirtSystems.valve.state == ValveState.FILL) {
+		if (false) {//TShirtSystems.valve.state == ValveState.FILL) {
 			if (TShirtSystems.pressureSensor.getPressure() >= nextPressurePrintOut) {
 				console.log(c.TSHIRT, "current pressure: " + TShirtSystems.pressureSensor.getPressure());
 				nextPressurePrintOut += 1;

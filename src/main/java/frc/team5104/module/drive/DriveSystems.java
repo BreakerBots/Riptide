@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.team5104.main.Ports;
+import frc.team5104.main.RobotState;
 import frc.team5104.module.Module;
 import frc.team5104.module.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.TalonFactory;
@@ -50,12 +51,19 @@ class DriveSystems extends Module.Systems {
 		}
 		
 		public static void stop() {
-			set(new DriveSignal(0, 0, DriveUnit.percentOutput));
+			Talon_L1.set(ControlMode.Disabled, 0);
+			Talon_R1.set(ControlMode.Disabled, 0);
 		}
 		
 		public static void set(double leftSpeed, double rightSpeed, ControlMode mode) {
-			Talon_L1.set(mode, leftSpeed);
-			Talon_R1.set(mode, rightSpeed);
+			if (RobotState.gotDriverStationResponse()) {
+				Talon_L1.set(mode, leftSpeed);
+				Talon_R1.set(mode, rightSpeed);
+			}
+			else {
+				//Motor Safety
+				stop();
+			}
 		}
 		
 		public static double getLeftBusVoltage() { return Talon_L1.getBusVoltage(); }

@@ -10,6 +10,8 @@ import frc.team5104.util.Controller.Rumble;
  * All the controls for the robot
  */
 public class Controls {
+	public static final Control robotDisable = new Control(ControlList.Menu);
+	
 	//Drive
 	public static class Drive {
 		public static final Control turn = new Control(ControlList.LeftJoystickX);
@@ -17,7 +19,7 @@ public class Controls {
 		public static final Control reverse = new Control(ControlList.LeftTrigger);
 	}
 	
-	//Hatch
+	//TShirt
 	public static class TShirt {
 		public static final Control rotateTurret = new Control(ControlList.RightJoystickX);
 		public static final Control rotatePitch = new Control(ControlList.RightJoystickY);

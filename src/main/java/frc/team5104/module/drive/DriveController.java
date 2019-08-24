@@ -2,6 +2,7 @@
 package frc.team5104.module.drive;
 
 import frc.team5104.main.Controls;
+import frc.team5104.main.RobotState;
 import frc.team5104.module.Module;
 import frc.team5104.module.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.BezierCurve;
@@ -50,7 +51,7 @@ class DriveController extends Module.Controller {
 		
 		//Apply min speed
 		signal = applyMotorMinSpeed(signal, 1);
-		
+			
 		//Set talon speeds
 		DriveSystems.motors.set(signal);
 	}
