@@ -17,7 +17,6 @@ import frc.team5104.util.console.t;
 
 class RobotController extends RobotBase {
 	//Modes
-	private RobotMode currentMode = RobotMode.Disabled;
 	private RobotMode lastMode = RobotMode.Disabled;
 	
 	private BreakerRobot robot;
@@ -57,25 +56,22 @@ class RobotController extends RobotBase {
 
 	//Main Loop
 	private void loop() {
-		if (isDisabled())
-			state.currentMode = RobotMode.Disabled;
+		if (isDisabled()) state.currentMode = RobotMode.Disabled;
 		
 		else if (isEnabled()) {
 			//Forced Through Driver Station
-			if (isTest())
-				state.currentMode = RobotMode.Test;
+			if (isTest()) state.currentMode = RobotMode.Test;
 			
 			//Default to Teleop
-			else if (state.currentMode == RobotMode.Disabled)
-				state.currentMode = RobotMode.Teleop;
+			else state.currentMode = RobotMode.Teleop;
 		}
 		
 		//Handle Modes
-		switch(currentMode) {
+		switch(state.currentMode) {
 			case Teleop: {
 				try {
 					//Teleop
-					if (lastMode != currentMode) {
+					if (lastMode != state.currentMode) {
 						console.log(c.MAIN, t.INFO, "Teleop Enabled");
 						robot.teleopStart();
 					}
@@ -92,7 +88,7 @@ class RobotController extends RobotBase {
 			case Test: {
 				try {
 					//Test
-					if (lastMode != currentMode) {
+					if (lastMode != state.currentMode) {
 						console.log(c.MAIN, t.INFO, "Test Enabled");
 						robot.testStart();
 					}
@@ -107,7 +103,7 @@ class RobotController extends RobotBase {
 			case Disabled: {
 				try {
 					//Disabled
-					if (lastMode != currentMode)
+					if (lastMode != state.currentMode)
 						switch (lastMode) {
 							case Teleop: { robot.teleopStop(); console.log(c.MAIN, t.INFO, "Teleop Disabled"); break; }
 							case Test: 	 { robot.testStop(); console.log(c.MAIN, t.INFO, "Test Disabled"); break; }
@@ -125,8 +121,8 @@ class RobotController extends RobotBase {
 		
 		//Handle Main Disabling
 		try {
-			if (lastMode != currentMode) {
-				if (currentMode == RobotMode.Disabled) {
+			if (lastMode != state.currentMode) {
+				if (state.currentMode == RobotMode.Disabled) {
 					console.logFile.end();
 					robot.mainDisabled();
 				}
@@ -134,8 +130,8 @@ class RobotController extends RobotBase {
 					console.logFile.start();
 					robot.mainEnabled();
 				}
-				LiveWindow.setEnabled(currentMode == RobotMode.Disabled);
-				lastMode = currentMode;
+				LiveWindow.setEnabled(state.currentMode == RobotMode.Disabled);
+				lastMode = state.currentMode;
 			}
 		} catch (Exception e) {
 			CrashLogger.logCrash(new Crash("main", e));

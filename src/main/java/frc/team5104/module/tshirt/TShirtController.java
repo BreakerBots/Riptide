@@ -2,9 +2,11 @@
 package frc.team5104.module.tshirt;
 
 import frc.team5104.main.Controls;
+import frc.team5104.main.RobotState;
 import frc.team5104.module.Module;
 import frc.team5104.module.tshirt.TShirtSystems.valve.ValveState;
 import frc.team5104.module.tshirt.Turret.TurretState;
+import frc.team5104.util.Buffer;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
@@ -12,29 +14,33 @@ import frc.team5104.util.console.t;
 class TShirtController extends Module.Controller {
 	
 	double targetPressure = 10; //PSI
-	double nextPressurePrintOut = 0;
+	double lastPressure = 0; //PSI
+	Buffer pressureVelocityBuffer = new Buffer(50, 0.0); //PSI/second
+	boolean readyToFire = false;
 	
 	enum FireMode { automatic, manual };
 	FireMode fireMode = FireMode.manual;
 	
 	protected void update() {
-		//Temp
-		//console.log("pressure: " + TShirtSystems.pressureSensor.getPressure());
+		//Pressure Velocity
+		pressureVelocityBuffer.update((TShirtSystems.pressureSensor.getPressure() - lastPressure) / RobotState.getDeltaTime());
 		
 		//Firing
 		if (Controls.TShirt.fire.getPressed()) {
 			TShirtSystems.valve.toggleState();
 			console.log(c.TSHIRT, TShirtSystems.valve.state == ValveState.EXHAUST ? "Firing!" : "Filling!");
 			(TShirtSystems.valve.state == ValveState.EXHAUST ? Controls.TShirt.fireRumble : Controls.TShirt.fillRumble).start();
-			nextPressurePrintOut = 1;
+			readyToFire = false;
 		}
 		
 		//Pressure Print Out
-		if (false) {//TShirtSystems.valve.state == ValveState.FILL) {
-			if (TShirtSystems.pressureSensor.getPressure() >= nextPressurePrintOut) {
-				console.log(c.TSHIRT, "current pressure: " + TShirtSystems.pressureSensor.getPressure());
-				nextPressurePrintOut += 1;
-			}
+		if (TShirtSystems.valve.state == ValveState.FILL) {
+//			if (pressureVelocityBuffer.getDoubleOutput() < 0.01 && !readyToFire) {
+//				Controls.TShirt.readyFireRumble.start();
+//				console.log(c.TSHIRT, "ready to fire");
+//				readyToFire = true;
+//			}
+//			console.log(String.format("%.2f", pressureVelocityBuffer.getDoubleOutput()));
 		}
 		
 		//Auto Fire (TODO: add fill error, rsl status, and led display status)
@@ -86,6 +92,9 @@ class TShirtController extends Module.Controller {
 		TShirtSystems.pitch.setSpeed(Controls.TShirt.rotatePitch.getAxis() * 
 				(Controls.TShirt.rotatePitch.getAxis() < 0 ? TShirtConstants.PITCH_UP_MAX_VOLTAGE :
 					TShirtConstants.PITCH_DOWN_MAX_VOLTAGE));
+		
+		//Last Pressure
+		lastPressure = TShirtSystems.pressureSensor.getPressure();
 	}
 		
 	protected void idle() {

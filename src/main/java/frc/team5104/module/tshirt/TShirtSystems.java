@@ -108,13 +108,21 @@ class TShirtSystems extends Module.Systems {
 	}
 	
 	static class pressureSensor {
-		static double getPressure() {
+		static double getRawPressure() {
 			return Talon_Pitch.getSelectedSensorPosition();
 		}
 		
-		static double getPressureVelocity() {
-			return Talon_Pitch.getSelectedSensorVelocity() * 10 /* Convert PSI/100ms to PSI/sec */;
+		static double getPressure() {
+			return getRawPressure() * .248842 - 26.8749;
 		}
+		
+		//static double getRawPressureVelocity() {
+			//return Talon_Pitch.getSelectedSensorVelocity() * 10 /* Convert PSI/100ms to PSI/sec */;
+		//}
+		
+		//static double getPressureVelocity() {
+			//return getRawPressureVelocity() * .248842 - 26.8749;
+		//}
 	}
 	
 	//static class revolver {}
@@ -125,7 +133,8 @@ class TShirtSystems extends Module.Systems {
 		Talon_Turret = TalonFactory.getTalon(Ports.TSHIRT_TALON_TURRET);
 		Talon_Pitch = TalonFactory.getTalon(Ports.TSHIRT_TALON_PITCH);
 		
-		Talon_Pitch.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.Analog);
+		Talon_Pitch.configSelectedFeedbackSensor(FeedbackDevice.Analog);
+		Talon_Pitch.configSensorTerm(SensorTerm.Diff0, FeedbackDevice.Analog);
 		
 		//Talon_Revolver = TalonFactory.getTalon...
 		

@@ -19,21 +19,22 @@ public class Robot extends RobotController.BreakerRobot {
 	}
 	
 	//Main
-	public void mainEnabled() {
+	public void mainLoop() {
+		Controller.handle();
+	}
+	
+	//Teleop
+	public void teleopStart() {
 		ModuleManager.enabled();
 	}
-	public void mainDisabled() {
+	public void teleopStop() {
 		ModuleManager.disabled();
 	}
-	public void mainLoop() {
-		if (RobotState.isEnabled()) {
-			ModuleManager.handle();
-			
-			if (Controls.robotDisable.getPressed()) {
-				//TODO disable robot here
-			}
-			
-			Controller.handle();
+	public void teleopLoop() {
+		ModuleManager.handle();
+		
+		if (Controls.robotDisable.getPressed()) {
+			//TODO disable robot here
 		}
 	}
 }

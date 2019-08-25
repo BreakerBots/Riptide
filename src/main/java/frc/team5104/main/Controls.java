@@ -29,9 +29,10 @@ public class Controls {
 		public static final Control	pressureDecrease = new Control(ControlList.DirectionPadDown);
 		public static final Control toggleFireMode = new Control(ControlList.List, Controllers.Main, false, 0.6, 500);
 		
-		public static final Rumble fireRumble = new Rumble(1, true, false, 1000);
-		public static final Rumble fillRumble = new Rumble(1, false, false, 1000);
+		public static final Rumble fireRumble = new Rumble(1, true, false, 500);
+		public static final Rumble fillRumble = new Rumble(1, false, false, 500);
 		public static final Rumble pressureRumble = new Rumble(1, false, false, 500);
 		public static final Rumble toggleFireModeRumble = new Rumble(1, true, true, 500);
+		public static final Rumble readyFireRumble = new Rumble(1, false, true, 500);
 	}
 }
