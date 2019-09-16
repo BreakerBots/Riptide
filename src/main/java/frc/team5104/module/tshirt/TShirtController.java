@@ -2,11 +2,10 @@
 package frc.team5104.module.tshirt;
 
 import frc.team5104.main.Controls;
-import frc.team5104.main.RobotState;
 import frc.team5104.module.Module;
+import frc.team5104.module.tshirt.TShirtSystems.RSL.RSLMode;
 import frc.team5104.module.tshirt.TShirtSystems.valve.ValveState;
 import frc.team5104.module.tshirt.Turret.TurretState;
-import frc.team5104.util.Buffer;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
@@ -14,37 +13,31 @@ import frc.team5104.util.console.t;
 class TShirtController extends Module.Controller {
 	
 	double targetPressure = 10; //PSI
-	double lastPressure = 0; //PSI
-	Buffer pressureVelocityBuffer = new Buffer(50, 0.0); //PSI/second
-	boolean readyToFire = false;
+	int nextPressurePrint = 0; //PSI
 	
-	enum FireMode { automatic, manual };
-	FireMode fireMode = FireMode.manual;
+	enum FireMode { AUTOMATIC, MANUAL };
+	FireMode fireMode = FireMode.MANUAL;
 	
 	protected void update() {
-		//Pressure Velocity
-		pressureVelocityBuffer.update((TShirtSystems.pressureSensor.getPressure() - lastPressure) / RobotState.getDeltaTime());
-		
 		//Firing
 		if (Controls.TShirt.fire.getPressed()) {
 			TShirtSystems.valve.toggleState();
 			console.log(c.TSHIRT, TShirtSystems.valve.state == ValveState.EXHAUST ? "Firing!" : "Filling!");
 			(TShirtSystems.valve.state == ValveState.EXHAUST ? Controls.TShirt.fireRumble : Controls.TShirt.fillRumble).start();
-			readyToFire = false;
+			nextPressurePrint = 0;
 		}
 		
 		//Pressure Print Out
 		if (TShirtSystems.valve.state == ValveState.FILL) {
-//			if (pressureVelocityBuffer.getDoubleOutput() < 0.01 && !readyToFire) {
-//				Controls.TShirt.readyFireRumble.start();
-//				console.log(c.TSHIRT, "ready to fire");
-//				readyToFire = true;
-//			}
-//			console.log(String.format("%.2f", pressureVelocityBuffer.getDoubleOutput()));
+			if (TShirtSystems.pressureSensor.getPressure() > nextPressurePrint) {
+				console.log(c.TSHIRT, "current pressure: " + TShirtSystems.pressureSensor.getPressure());
+				Controls.TShirt.fillRumble.start();
+				nextPressurePrint += 5;
+			}
 		}
 		
 		//Auto Fire (TODO: add fill error, rsl status, and led display status)
-		if (TShirtSystems.valve.state == ValveState.FILL && fireMode == FireMode.automatic) {
+		if (TShirtSystems.valve.state == ValveState.FILL && fireMode == FireMode.AUTOMATIC) {
 			//fire when ready
 			if (TShirtSystems.pressureSensor.getPressure() >= targetPressure) {
 				TShirtSystems.valve.setState(ValveState.EXHAUST);
@@ -56,14 +49,14 @@ class TShirtController extends Module.Controller {
 		//Switch Fire Mode
 		if (Controls.TShirt.toggleFireMode.getHeldEvent()) {
 			Controls.TShirt.toggleFireModeRumble.start();
-			if (fireMode == FireMode.manual) fireMode = FireMode.automatic;
-			else fireMode = FireMode.manual;
+			if (fireMode == FireMode.MANUAL) fireMode = FireMode.AUTOMATIC;
+			else fireMode = FireMode.MANUAL;
 			console.log(c.TSHIRT, "changed to " + fireMode.name() + " fire mode");
 		}
 		
 		//Pressure
 		if (Controls.TShirt.pressureIncrease.getPressed()) {
-			if (fireMode == FireMode.automatic) {
+			if (fireMode == FireMode.AUTOMATIC) {
 				targetPressure += 2;
 				console.log(c.TSHIRT, "target pressure: " + targetPressure);
 				Controls.TShirt.pressureRumble.start();
@@ -73,7 +66,7 @@ class TShirtController extends Module.Controller {
 			}
 		}
 		if (Controls.TShirt.pressureDecrease.getPressed()) {
-			if (fireMode == FireMode.automatic) {
+			if (fireMode == FireMode.AUTOMATIC) {
 				targetPressure -= 2;
 				console.log(c.TSHIRT, "target pressure: " + targetPressure);
 				Controls.TShirt.pressureRumble.start();
@@ -93,8 +86,8 @@ class TShirtController extends Module.Controller {
 				(Controls.TShirt.rotatePitch.getAxis() < 0 ? TShirtConstants.PITCH_UP_MAX_VOLTAGE :
 					TShirtConstants.PITCH_DOWN_MAX_VOLTAGE));
 		
-		//Last Pressure
-		lastPressure = TShirtSystems.pressureSensor.getPressure();
+		//RSL
+		TShirtSystems.RSL.set(RSLMode.ENABLED, 1.0);
 	}
 		
 	protected void idle() {

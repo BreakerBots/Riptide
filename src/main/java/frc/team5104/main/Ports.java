@@ -17,4 +17,7 @@ public class Ports {
 	public static final int TSHIRT_TALON_PITCH = 22;
 	//public static final int TSHIRT_TALON_RELOAD = 23;
 	//public static final int TSHIRT_CANIFIER = 24;
+	public static final int TSHIRT_RSL_RED = 69;
+	public static final int TSHIRT_RSL_GREEN = 420;
+	public static final int TSHIRT_RSL_BLUE = 254;
 }

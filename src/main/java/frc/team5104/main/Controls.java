@@ -33,6 +33,6 @@ public class Controls {
 		public static final Rumble fillRumble = new Rumble(1, false, false, 500);
 		public static final Rumble pressureRumble = new Rumble(1, false, false, 500);
 		public static final Rumble toggleFireModeRumble = new Rumble(1, true, true, 500);
-		public static final Rumble readyFireRumble = new Rumble(1, false, true, 500);
+		public static final Rumble readyFireRumble = new Rumble(1, false, false, 250); //plz shorten
 	}
 }

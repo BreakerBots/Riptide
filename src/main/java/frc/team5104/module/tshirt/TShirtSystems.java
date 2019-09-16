@@ -127,6 +127,42 @@ class TShirtSystems extends Module.Systems {
 	
 	//static class revolver {}
 	
+	static class RSL {
+		enum RSLMode {
+			DISABLED,
+			ENABLED,
+			FILLING,
+		}
+		private static RSLMode currentMode = RSLMode.DISABLED;
+		private static double currentDemand = 1.0;
+		
+		static void set(RSLMode mode, double demand) {
+			currentMode = mode;
+			currentDemand = demand;
+		}
+		
+		static RSLMode get() {
+			return currentMode;
+		}
+		
+		static void update() {
+			switch (currentMode) {
+				case DISABLED: {
+					//disabled
+					break;
+				}
+				case ENABLED: {
+					//enabled
+					break;
+				}
+				case FILLING: {
+					//filling
+					break;
+				}
+			}
+		}
+	}
+	
 	protected void init() {
 		Valve = new Solenoid(Ports.TSHIRT_VALVE);
 		
