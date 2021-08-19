@@ -54,6 +54,11 @@ class RobotController extends RobotBase {
 		}
 	}
 
+	//End Competition
+	public void endCompetition() {
+		
+	}
+
 	//Main Loop
 	private void loop() {
 		if (isDisabled()) state.currentMode = RobotMode.Disabled;
@@ -152,6 +157,8 @@ class RobotController extends RobotBase {
 		RobotController.startRobot(RobotController::new);
 	}
 	
+
+
 	//Child Class
 	/**
 	 * The Main Robot Interface. Called by this, Breaker Robot Controller
